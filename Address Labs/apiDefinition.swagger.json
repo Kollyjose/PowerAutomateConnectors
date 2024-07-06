@@ -1,0 +1,200 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Address Labs",
+      "description": "A free API which parses an address within the United States into it's individual components.",
+      "contact": {
+        "name": "Richard Wilson",
+        "url": "http://powerappsraw.com"       
+      }
+    },
+    "x-ms-connector-metadata": [
+      {
+        "propertyName": "Website",
+        "propertyValue": "http://powerappsraw.com"
+      }
+    ],
+    "host": "api.addresslabs.com",
+    "basePath": "/v1",
+    "schemes": [
+      "http"
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/parsed-address": {
+        "post": {
+          "summary": "Parse Address",
+          "description": "Returns the parsed address information from a single address string.",
+          "operationId": "Parsed-Address",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "address": {
+                    "type": "string",
+                    "description": "The address you would like to parse, eg. '5404 Wisconsin Ave #700 Chevy Chase MD 20815'",
+                    "x-ms-visibility": "important",
+                    "x-ms-summary": "Address"              
+                  }
+                },
+                "required": ["address"],
+                "example": {
+                  "address" : "5404 Wisconsin Ave #700 Chevy Chase MD 20815"
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "The response containing the parsed address attributes.",
+              "schema": {
+                "type": "object",          
+                "properties": {
+                    "number": {
+                      "type": "string",
+                      "description": "Street number"
+                    },
+                    "street": {
+                      "type": "string",
+                      "description": "Street name"
+                    },
+                    "street_suffix": {
+                      "type": "string",
+                      "description": "Street suffix, for example 'St', 'Rt', 'Ave', etc."
+                    },
+                    "unit": {
+                      "type": "string",
+                      "description": "Unit"
+                    },
+                    "unit_designator": {
+                      "type": "string",
+                      "description": "Unit designator, for example 'Apt', 'Ste', 'Ut', etc."
+                    },
+                    "street_pre_direction": {
+                      "type": "string",
+                      "description": "Directional designator appearing before street name, eg. 'N' in '1 N Main St'"
+                    },
+                    "street_post_direction": {
+                      "type": "string",
+                      "description": "Directional designator appearing after street name, eg. 'NW' in '901 K St NW'"
+                    },
+                    "street2": {
+                      "type": "string",
+                      "description": "2nd street name, if address an intersection of 2 streets"
+                    },
+                    "street2_suffix": {
+                      "type": "string",
+                      "description": "Suffix of 2nd street"
+                    },
+                    "street2_pre_direction": {
+                      "type": "string",
+                      "description": "Directional designator appearing before 2nd street name"
+                    },
+                    "street2_post_direction": {
+                      "type": "string",
+                      "description": "Directional designator appearing after 2nd street name"
+                    },
+                    "city": {
+                      "type": "string",
+                      "description": "City"
+                    },
+                    "state": {
+                      "type": "string",
+                      "description": "State abbreviation"
+                    },
+                    "state_fips": {
+                      "type": "string",
+                      "description": "State FIPS code"
+                    },
+                    "zip": {
+                      "type": "string",
+                      "description": "5 digit ZIP code"
+                    },
+                    "zip4": {
+                      "type": "string",
+                      "description": "Plus-four ZIP digits"
+                    },
+                    "intersection": {
+                      "type": "boolean",
+                      "description": "Boolean, indicating whether the address is an intersection or not. true or false"
+                    },
+                    "delivery": {
+                        "type" : "object",                        
+                        "properties": {
+                            "address_line": {
+                              "type": "string",
+                              "description": "1st line of the address formatted following USPS guidelines"
+                            },
+                            "last_line": {
+                              "type": "string",
+                              "description": "2nd line of the address formatted following USPS guidelines"
+                            }
+                          }                        
+                    },
+                    "input": {
+                      "type": "string",
+                      "description": "Input address string"
+                    }
+                }
+              },
+              "examples": {
+                "application/json": {                
+                    "number": "5404",
+                    "street": "Wisconsin",
+                    "street_suffix": "Ave",
+                    "unit": "700",
+                    "city": "Chevy Chase",
+                    "state": "MD",
+                    "state_fips": "24",
+                    "zip": "20815",
+                    "intersection": false,
+                    "delivery": {
+                      "address_line": "5404 Wisconsin Ave # 700",
+                      "last_line": "Chevy Chase MD  20815"
+                    },
+                    "input": "5404 Wisconsin Ave #700 Chevy Chase MD 20815"                
+                }
+            }
+            },
+            "406" : {
+              "description": "Address could not be parsed"
+            },
+            "500" : {
+              "description": "The API is down"
+            },
+            "502" : {
+              "description": "Bad gateway"
+            },
+            "503" : {
+              "description": "Service unavailable"
+            },
+            "504" : {
+              "description": "Gateway timeout"
+            }        
+          }
+        }
+      }
+    },
+    "definitions": {},
+    "parameters": {},
+    "responses": {},
+    "securityDefinitions": {},
+    "security": [],
+    "tags": []
+  }
