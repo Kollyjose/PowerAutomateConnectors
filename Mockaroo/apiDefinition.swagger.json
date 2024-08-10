@@ -1,0 +1,95 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Mockaroo",
+    "description": "Utilize the Mockaroo API https://www.mockaroo.com/ to return sample data you can use to test your application."
+  },
+  "host": "api.mockaroo.com",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/generate.json": {
+      "post": {
+        "summary": "Generate Data",
+        "description": "Allows you to return generated data from an existing schema you have created in Mockaroo.",
+        "operationId": "GenerateData",
+        "parameters": [
+          {
+            "$ref": "#/parameters/array"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "schema": {
+                  "type": "string",
+                  "x-ms-summary": "Schema Name",
+                  "description": "The name of the Mockaroo schema you would like to use.",
+                  "x-ms-visibility": "important"
+                },
+                "count": {
+                  "type": "integer",
+                  "x-ms-summary": "Record Count",
+                  "format": "int32",
+                  "description": "Return a specific number of records.  If not specified the number currently set in the schema will be used.",
+                  "x-ms-visibility": "important"
+                }
+              },
+              "required": [
+                "schema"
+              ]
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {},
+  "parameters": {
+    "array": {
+      "in": "query",
+      "name": "array",
+      "type": "boolean",
+      "default": true,
+      "x-ms-visibility": "internal",
+      "required": true
+    }
+  },
+  "responses": {},
+  "securityDefinitions": {
+    "API Key": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "X-API-Key"
+    }
+  },
+  "security": [
+    {
+      "API Key": []
+    }
+  ],
+  "tags": []
+}
